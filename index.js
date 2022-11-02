@@ -1,14 +1,39 @@
-//odpowiedź do pytania w zadanie 1: Event emiter
+const { response, request } = require('express');
+const service = require('./service')
 const express = require('express');
-const questions = require('./questions').questions;
-const config = require("./config").config
+const res = require('express/lib/response');
+const config = require('./config').config;
 
 const app = express();
 
-app.get('/api/questions', (request,response) =>{
-	response.send(questions)
+app.set('view engine','html');
+app.engine('html',require('ejs').renderFile);
+
+let chart1 = '{"type":"line","data":{"labels":["January","February","March","April","May","June"],"datasets":[{"label":"My First dataset","backgroundColor":"rgb(255, 99, 132)","borderColor":"rgb(255, 99, 132)","data":[0,10,5,2,20,30,45]}]},"options":{}}';
+const temp = `Czas,Temperatura
+2021-10-29 10:00:00,10
+2021-10-29 11:00:00,13
+2021-10-29 12:00:00,16
+2021-10-29 13:00:00,18
+2021-10-29 14:00:00,19
+2021-10-29 15:00:00,19
+2021-10-29 16:00:00,17`;
+
+const dataChart2 = service.convertData(temp);
+
+const chart2 = JSON.stringify(dataChart2);
+
+app.get('/', (request, response) => {
+	//response.send('Serwer działa');
+	response.render(__dirname+'/index.html',{subject: 'Technologie webowe w aplikacjach Internetu', chart1:chart1, chart2:chart2});
+});
+
+app.use(express.static('public'));
+
+app.post('/zdjecie/', (request, response)=>{
+	response.sendFile('./tlo.jpg')
 })
 
-app.listen(3000, function () {
-	console.info('Server is running at port 3000');
+app.listen(config.port, function(){
+	console.info('Serwer is running at port 3000')
 });
