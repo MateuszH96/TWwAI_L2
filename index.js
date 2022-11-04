@@ -1,4 +1,3 @@
-//const { response, request } = require('express');
 const express = require('express');
 const ejs = require('ejs')
 const config = require('./public/js/config').config;
@@ -15,7 +14,7 @@ app.engine('html',ejs.renderFile);
 
 app.get('/', (request, response) => {
 	response.render(__dirname+'/views/index.html',
-	{subject: 'Technologie webowe w aplikacjach Internetu'});
+	{subject: 'Nazwa zmieniającego się nagłowka'});
 });
 
 app.listen(config.port, function(){
