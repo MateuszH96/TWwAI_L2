@@ -37,7 +37,7 @@ nav ul li a:hover {
 }
 
 .background {
-	background-image: url("https://media.makeameme.org/created/informatik-dd9fd3eda3.jpg");
+	background-image: url("/img/background.jpg");
 	height: 100%;
 
 	background-attachment: fixed;
